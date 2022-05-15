@@ -1,5 +1,8 @@
 export const API = () => {
-  const baseUrl = "http://localhost:5000/api/v1";
+  const baseUrl = 
+    peocess.env.SERVER_URL ||
+    "https://dumbmerch-b33-2022.herokuapp.com/api/v1" ||
+    "http://localhost:5000/api/v1";
 
   const executeAPI = async (endpoint, config) => {
     const response = await fetch(baseUrl + endpoint, config);
