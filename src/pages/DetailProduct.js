@@ -30,19 +30,18 @@ export default function DetailProduct() {
     return response.data;
   });
 
-  // Create config Snap payment page with useEffect here ...
   useEffect(() => {
     //change this to the script source you want to load, for example this is snap.js sandbox env
     const midtransScriptUrl = "https://app.sandbox.midtrans.com/snap/snap.js";
     //change this according to your client-key
-    const myMidtransClientKey = "SB-Mid-client-A3OQbgr_e6AlRfQc";
-  
+    const myMidtransClientKey = "SB-Mid-client-yMIcmA1HzPvyaRsh";
+
     let scriptTag = document.createElement("script");
     scriptTag.src = midtransScriptUrl;
     // optional if you want to set script attribute
     // for example snap.js have data-client-key attribute
     scriptTag.setAttribute("data-client-key", myMidtransClientKey);
-  
+
     document.body.appendChild(scriptTag);
     return () => {
       document.body.removeChild(scriptTag);
@@ -52,7 +51,6 @@ export default function DetailProduct() {
   const handleBuy = useMutation(async () => {
     try {
       // Get data from product
-
       const data = {
         idProduct: product.id,
         idSeller: product.user.id,
@@ -74,10 +72,9 @@ export default function DetailProduct() {
 
       // Insert transaction data
       const response = await api.post("/transaction", config);
-
-      // Create variabel for store token payment from response here ...
+      console.log(response);
       const token = response.payment.token;
-      
+
       window.snap.pay(token, {
         onSuccess: function (result) {
           /* You may add your own implementation here */
@@ -98,9 +95,6 @@ export default function DetailProduct() {
           alert("you closed the popup without finishing the payment");
         },
       });
-
-
-      // Init Snap for display payment page with token here ...
     } catch (error) {
       console.log(error);
     }
